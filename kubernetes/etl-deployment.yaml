@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etl-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etl
+  template:
+    metadata:
+      labels:
+        app: etl
+    spec:
+      containers:
+      - name: etl
+        image: davidprieto94/etl-image:latest  # Asegúrate de usar tu usuario y etiqueta
+        env:
+          - name: DB_HOST
+            value: mysql
+          - name: DB_USER
+            value: root
+          - name: DB_PASSWORD
+            value: admin
+          - name: DB_NAME
+            value: habi_test

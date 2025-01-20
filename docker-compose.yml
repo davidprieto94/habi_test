@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: habi_test
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  etl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: etl_container
+    depends_on:
+      - database
+    environment:
+      DB_HOST: database
+      DB_USER: root
+      DB_PASSWORD: admin
+      DB_NAME: habi_test
+
+volumes:
+  db_data:
